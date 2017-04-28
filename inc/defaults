@@ -1,0 +1,26 @@
+# Base directory for the installation.
+BASEDIR=${BASEDIR:-"/store"}
+
+# The parent directory for the workspace.
+WORKSPACEPARENT=${WORKSPACEPARENT:-"${BASEDIR}/workspace"}
+
+# The pattern used to create a workspace directory.
+WORKSPACEPATTERN=${WORKSPACEPATTERN:-"${WORKSPACEPARENT}/docker_XXXXXXXXXX"}
+
+# Cache directory
+CACHEDIR=${CACHEDIR:-"${BASEDIR}/cache"}
+
+# Default database if none is specified
+DB=${DB:-"pgsql"}
+DBVERSION=${DBVERSION:-"latest"}
+
+# Default target if none is specified
+TARGET=${TARGET:-"${TARGET}/phpunit"}
+TARGETARGS=${TARGETARGS:-""}
+
+# The seed repository used when cloning initially.
+SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
+
+# The repository being tested.
+TESTREPO=${TESTREPO:-"git://git.moodle.org/integration.git"}
+TESTBRANCH=${TESTBRANCH:-"master"}

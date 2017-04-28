@@ -1,0 +1,3 @@
+HOST_DB="${UNIQID}_db"
+HOST_PHP="${UNIQID}_php"
+NETWORK="${UNIQID}_net"

@@ -1,0 +1,36 @@
+# Load the config file if present.
+CONFIGPATH="${SCRIPTPATH}/config"
+if [ -f "${CONFIGPATH}" ]
+then
+  echo "# Loading configuration from  ${CONFIGPATH}"
+  . "${CONFIGPATH}"
+fi
+
+# Load defaults.
+. "${INCPATH}/defaults"
+
+# Ensure that the workspace directory exists.
+mkdir -p "${WORKSPACEPARENT}"
+
+# Create the actual workspace and get a unique id.
+WORKSPACE=`mktemp -d "${WORKSPACEPATTERN}"`
+UNIQID=`basename "$WORKSPACE"`
+
+# Setup the host names.
+. "${INCPATH}/hostnames"
+
+# Setup cleanup for when we finish.
+function finish {
+    # Clear out the workspace
+    rm -rf "$WORKSPACE"
+
+    # The DB container does not shut down automatically.
+    docker container rm -f "${HOST_DB}"
+
+    # Remove the test nestwork.
+    docker network rm "${NETWORK}"
+}
+trap finish EXIT
+
+# Setup the network for this test.
+docker network create "${NETWORK}"

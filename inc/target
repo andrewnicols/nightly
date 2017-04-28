@@ -1,0 +1,13 @@
+TARGETPATH="${INCPATH}/targets/${TARGET}"
+
+if [ ! -f "${TARGETPATH}" ]
+then
+  echo "****************************************************************************"
+  echo "** Unable to find target configuration for ${TARGET}"
+  echo "****************************************************************************"
+
+  exit 1
+fi
+
+echo "# Found target configuration for ${TARGET}"
+. "${TARGETPATH}"

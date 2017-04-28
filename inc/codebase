@@ -1,0 +1,10 @@
+# Clone the Moodle codebase into the workspace directory.
+echo "# Cloning seed repository"
+git clone "${SEEDREPO}" "${WORKSPACE}"
+
+echo "# Fetching test branch from ${TESTREPO}/${TESTBRANCH}"
+cd "${WORKSPACE}"
+git remote add test "${TESTREPO}"
+git fetch test "${TESTBRANCH}"
+git reset --hard "test/${TESTBRANCH}"
+cd -

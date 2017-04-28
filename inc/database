@@ -1,0 +1,13 @@
+DBPATH="${INCPATH}/databases/${DB}"
+
+if [ ! -f "${DBPATH}" ]
+then
+  echo "****************************************************************************"
+  echo "** Unable to find database configuration for ${DB}"
+  echo "****************************************************************************"
+
+  exit 1
+fi
+
+echo "# Found database configuration for ${DB}"
+. "${DBPATH}"
