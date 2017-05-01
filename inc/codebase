@@ -7,4 +7,4 @@ cd "${WORKSPACE}"
 git remote add test "${TESTREPO}"
 git fetch test "${TESTBRANCH}"
 git reset --hard "test/${TESTBRANCH}"
-cd -
+cd - > /dev/null

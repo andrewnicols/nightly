@@ -2,12 +2,15 @@
 CONFIGPATH="${SCRIPTPATH}/config"
 if [ -f "${CONFIGPATH}" ]
 then
-  echo "# Loading configuration from  ${CONFIGPATH}"
   . "${CONFIGPATH}"
+  echo "# Loaded configuration from  ${CONFIGPATH}"
 fi
 
 # Load defaults.
 . "${INCPATH}/defaults"
+
+# Load the include functions.
+. "${INCPATH}/functions"
 
 # Ensure that the workspace directory exists.
 mkdir -p "${WORKSPACEPARENT}"
@@ -33,4 +36,27 @@ function finish {
 trap finish EXIT
 
 # Setup the network for this test.
-docker network create "${NETWORK}"
+docker network create "${NETWORK}" > /dev/null
+
+echo "# Job '${UNIQID}'"
+echo "# Requested target ${TASK} ${TASK_ARGS}"
+echo "# Requested database ${DB} (${DB_VERSION})"
+echo "############################################################################"
+echo ""
+
+# Setup database.
+. "${INCPATH}/database"
+
+# Setup the codebase to be tested.
+. "${INCPATH}/codebase"
+
+# Perform setup for the specified target.
+. "${INCPATH}/target"
+
+# Start PHP and run the target.
+. "${INCPATH}/php"
+
+echo "############################################################################"
+echo "# Run completed with exit code of ${EXITCODE}"
+echo "############################################################################"
+exit $EXITCODE

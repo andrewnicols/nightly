@@ -8,31 +8,8 @@ then
   exit 1
 fi
 
-DBPREFIX=${DBPREFIX:-'p_'}
-DBNAME=${DBNAME:-'moodle'}
-DBUSER=${DBUSER:-'moodle'}
-DBPASS=${DBPASS:-'moodle'}
-DBVERSION=${DBVERSION:-'latest'}
-DBSCRIPTS="${INCPATH}/databases/pgsql.d"
+DB_SCRIPTS="${INCPATH}/databases/pgsql.d"
 
-DBIMAGE="postgres:${DBVERSION}"
-
-docker run \
-  `# Use the network for this unique run` \
-  --network "${NETWORK}" \
-  `# Detach after launcing` \
-  -d \
-  `# Remain interactive` \
-  -i \
-  `# Remove when done` \
-  --rm \
-  `# Use a known name instead of linking` \
-  --name="$HOST_DB" \
-  `# Mount the postgres docker entrypoint folder to allow for post-setup tuning` \
-  -v "${DBSCRIPTS}":/docker-entrypoint-initdb.d \
-  `# Use a tmpfs for the postgres data directory` \
-  --tmpfs /var/lib/postgresql/data:rw \
-  `# Set the supplied params` \
-  -e POSTGRES_USER=${DBUSER} -e POSTGRES_PASSWORD=${DBPASS} -e POSTGRES_DB=${DBNAME} \
-  `# The image` \
-  ${DBIMAGE}
+DB_IMAGE="postgres:${DB_VERSION}"
+DB_IMAGE_OPTS="-e POSTGRES_USER=${DB_USER} -e POSTGRES_PASSWORD=${DB_PASS} -e POSTGRES_DB=${DB_NAME} -v ${DB_SCRIPTS}:/docker-entrypoint-initdb.d"
+DB_IMAGE_TMPFS="--tmpfs /var/lib/postgresql/data:rw"

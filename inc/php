@@ -1,0 +1,39 @@
+PHPPATH="${INCPATH}/phps/${PHP}"
+
+if [ ! -f "${PHPPATH}" ]
+then
+  echo "****************************************************************************"
+  echo "** Unable to find php configuration for version ${PHP}"
+  echo "****************************************************************************"
+
+  exit 1
+fi
+
+echo "# Found database configuration for ${PHP}"
+. "${PHPPATH}"
+
+if [ -z "PHP_IMAGE" ]
+then
+  echo "****************************************************************************"
+  echo "** No image found in ${PHPPATH} config file"
+  echo "****************************************************************************"
+fi
+
+echo "# Starting docker run"
+DOCKER_RUN_ARGS_VOLS_MOODLE="-v ${WORKSPACE}:/var/www/html/moodle:rw"
+DOCKER_RUN_ARGS_VOLS_COMPOSER="-v ${CACHEDIR}/composer:/.composer/cache:rw"
+DOCKER_RUN_ARGS_ENTRYPOINT="--entrypoint ${ENTRYPOINT} ${ENTRYPOINTARGS}"
+DOCKER_RUN_ARGS_DB="--dbtype=${DBTYPE} --dbhost=${HOST_DB} --dbname=${DBNAME} --phpunitdbprefix=${DBPREFIX} --dbuser=${DBUSER} --dbpass=${DBPASS}"
+DOCKER_RUN_ARGS_ENV_COMPOSER="-e 'COMPOSER_CACHE_DIR=/.composer/cache'"
+
+DOCKER_RUN_ARGS=" ${DOCKER_RUN_ARGS_VOLS_MOODLE} ${DOCKER_RUN_ARGS_VOLS_COMPOSER} ${DOCKER_RUN_ARGS_ENTRY} ${PHP_IMAGE} ${DOCKER_RUN_ARGS_DB} $EXTRA_OPT"
+docker run \
+  -i \
+  --rm \
+  -u `id -u $USER` \
+  "${DOCKER_RUN_ARGS_ENV_COMPOSER}" \
+  --name ${HOST_PHP} \
+  --network "${NETWORK}" \
+  ${DOCKER_RUN_ARGS}
+
+EXITCODE=$?

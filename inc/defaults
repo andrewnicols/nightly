@@ -1,7 +1,43 @@
-# Base directory for the installation.
+############################################################################
+# The task settings.
+############################################################################
+# TASK should be one of the tasks listed in the inc/tasks directory.
+TASK=${TASK:-"phpunit"}
+TASK_ARGS=${TASK_ARGS:-""}
+
+############################################################################
+# The code being tested.
+############################################################################
+# The repository being tested.
+TESTREPO=${TESTREPO:-"git://git.moodle.org/integration.git"}
+TESTBRANCH=${TESTBRANCH:-"master"}
+
+# The seed repository used when cloning initially.
+# This should not normally need to be changed at all.
+SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
+
+############################################################################
+# Database configuration.
+############################################################################
+# Database server to use.
+# This should be one of the database versions listed in inc/databases.
+DB=${DB:-"pgsql"}
+DB_VERSION=${DBVERSION:-"latest"}
+
+############################################################################
+# PHP configuration
+############################################################################
+# PHP version to use.
+# This should be one of the php versions listed in inc/phps.
+PHP=${PHP:-"70"}
+
+############################################################################
+# File system configuration for tests.
+############################################################################
+# Shared base directory.
 BASEDIR=${BASEDIR:-"/store"}
 
-# The parent directory for the workspace.
+# The directory that the workspace will be placed in.
 WORKSPACEPARENT=${WORKSPACEPARENT:-"${BASEDIR}/workspace"}
 
 # The pattern used to create a workspace directory.
@@ -9,18 +45,3 @@ WORKSPACEPATTERN=${WORKSPACEPATTERN:-"${WORKSPACEPARENT}/docker_XXXXXXXXXX"}
 
 # Cache directory
 CACHEDIR=${CACHEDIR:-"${BASEDIR}/cache"}
-
-# Default database if none is specified
-DB=${DB:-"pgsql"}
-DBVERSION=${DBVERSION:-"latest"}
-
-# Default target if none is specified
-TARGET=${TARGET:-"${TARGET}/phpunit"}
-TARGETARGS=${TARGETARGS:-""}
-
-# The seed repository used when cloning initially.
-SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
-
-# The repository being tested.
-TESTREPO=${TESTREPO:-"git://git.moodle.org/integration.git"}
-TESTBRANCH=${TESTBRANCH:-"master"}

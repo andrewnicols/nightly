@@ -1,0 +1,3 @@
+#!/bin/bash
+
+PHP_IMAGE="rajeshtaneja/php:7.0"

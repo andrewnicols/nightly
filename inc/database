@@ -1,6 +1,6 @@
-DBPATH="${INCPATH}/databases/${DB}"
+DB_PATH="${INCPATH}/databases/${DB}"
 
-if [ ! -f "${DBPATH}" ]
+if [ ! -f "${DB_PATH}" ]
 then
   echo "****************************************************************************"
   echo "** Unable to find database configuration for ${DB}"
@@ -9,5 +9,30 @@ then
   exit 1
 fi
 
+# The DB settings.
+DB_PREFIX=${DB_PREFIX:-'p_'}
+DB_NAME=${DB_NAME:-'moodle'}
+DB_USER=${DB_USER:-'moodle'}
+DB_PASS=${DB_PASS:-'moodle'}
+
+# The DB settings for this docker image.
+DB_IMAGE=${DB_IMAGE:-""}
+DB_IMAGE_TMPFS=${DB_IMAGE_TMPFS:-""}
+DB_IMAGE_OPTS=${DB_IMAGE_OPTS:-""}
+
 echo "# Found database configuration for ${DB}"
-. "${DBPATH}"
+. "${DB_PATH}"
+
+runscript "databases" "${DB}" "pre-up"
+
+docker run \
+  --network "${NETWORK}" \
+  -d \
+  -i \
+  --rm \
+  --name="$HOST_DB" \
+  "${DB_IMAGE_TMPFS}" \
+  "${DB_IMAGE_OPTS}" \
+  "${DB_IMAGE}"
+
+runscript "databases" "${DB}" "post-up"

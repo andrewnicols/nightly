@@ -1,0 +1,14 @@
+function runscript {
+    scriptroot=$1
+    scriptsubject=$2
+    scriptpoint=$3
+
+    scriptpath="${INCPATH}/${scriptroot}/${scriptsubject}.${scriptpoint}"
+    if [ -d "${scriptpath}" ]
+    then
+        for script in ${scriptpath}/*
+        do
+            . "${script}"
+        done
+    fi
+}

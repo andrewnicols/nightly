@@ -1,13 +1,15 @@
-TARGETPATH="${INCPATH}/targets/${TARGET}"
+TASKPATH="${INCPATH}/targets/${TASK}"
 
-if [ ! -f "${TARGETPATH}" ]
+if [ ! -f "${TASKPATH}" ]
 then
   echo "****************************************************************************"
-  echo "** Unable to find target configuration for ${TARGET}"
+  echo "** Unable to find target configuration for ${TASK}"
   echo "****************************************************************************"
 
   exit 1
 fi
 
-echo "# Found target configuration for ${TARGET}"
-. "${TARGETPATH}"
+ENTRYPOINT=${ENTRYPOINT:-""}
+ENTRYPOINTARGS=${ENTRYPOINTARGS:-""} 
+echo "# Found target configuration for ${TASK}"
+. "${TASKPATH}"
