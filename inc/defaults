@@ -42,6 +42,9 @@ WORKSPACEPATTERN=${WORKSPACEPATTERN:-"${WORKSPACEPARENT}/docker_XXXXXXXXXX"}
 # Cache directory
 CACHEDIR=${CACHEDIR:-"${BASEDIR}/cache"}
 
+# Additional arguments for mounting volumes.
+VOLUME_ARGS=${VOLUME_ARGS:-""}
+
 # The seed repository used when cloning initially.
 # This should not normally need to be changed at all.
 SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
