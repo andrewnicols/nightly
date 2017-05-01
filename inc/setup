@@ -44,7 +44,7 @@ echo " done."
 echo "############################################################################"
 echo "# Task summary for '${UNIQID}':"
 echo "#"
-echo "# Requested target ${TASK} ${TASK_ARGS}"
+echo "# Requested task ${TASK} ${TASK_ARGS}"
 echo "# Requested database ${DB} (${DB_VERSION})"
 echo "############################################################################"
 echo ""
@@ -55,10 +55,10 @@ echo ""
 # Setup the codebase to be tested.
 . "${INCPATH}/codebase"
 
-# Perform setup for the specified target.
-. "${INCPATH}/target"
+# Perform setup for the specified task.
+. "${INCPATH}/task"
 
-# Start PHP and run the target.
+# Start PHP and run the task.
 . "${INCPATH}/php"
 EXITCODE=${EXITCODE:-1}
 
