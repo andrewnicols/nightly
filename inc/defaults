@@ -12,10 +12,6 @@ TASK_ARGS=${TASK_ARGS:-""}
 TESTREPO=${TESTREPO:-"git://git.moodle.org/integration.git"}
 TESTBRANCH=${TESTBRANCH:-"master"}
 
-# The seed repository used when cloning initially.
-# This should not normally need to be changed at all.
-SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
-
 ############################################################################
 # Database configuration.
 ############################################################################
@@ -45,3 +41,8 @@ WORKSPACEPATTERN=${WORKSPACEPATTERN:-"${WORKSPACEPARENT}/docker_XXXXXXXXXX"}
 
 # Cache directory
 CACHEDIR=${CACHEDIR:-"${BASEDIR}/cache"}
+
+# The seed repository used when cloning initially.
+# This should not normally need to be changed at all.
+SEEDREPO=${SEEDREPO:-"${BASEDIR}/clones/integration"}
+

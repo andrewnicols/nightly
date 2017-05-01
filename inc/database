@@ -31,8 +31,9 @@ docker run \
   -i \
   --rm \
   --name="$HOST_DB" \
-  "${DB_IMAGE_TMPFS}" \
-  "${DB_IMAGE_OPTS}" \
-  "${DB_IMAGE}"
+  ${DB_IMAGE_TMPFS} \
+  ${DB_IMAGE_OPTS} \
+  ${DB_IMAGE} \
+  > /dev/null
 
 runscript "databases" "${DB}" "post-up"

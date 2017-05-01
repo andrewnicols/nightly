@@ -2,43 +2,48 @@
 CONFIGPATH="${SCRIPTPATH}/config"
 if [ -f "${CONFIGPATH}" ]
 then
+  echo -n "# Loading host configuration read from ${CONFIGPATH}"
   . "${CONFIGPATH}"
-  echo "# Loaded configuration from  ${CONFIGPATH}"
+  echo ". done."
 fi
+
+echo -n "# Performing pre-job setup"
 
 # Load defaults.
 . "${INCPATH}/defaults"
+echo -n "."
 
 # Load the include functions.
 . "${INCPATH}/functions"
+echo -n "."
 
 # Ensure that the workspace directory exists.
 mkdir -p "${WORKSPACEPARENT}"
+echo -n "."
 
 # Create the actual workspace and get a unique id.
 WORKSPACE=`mktemp -d "${WORKSPACEPATTERN}"`
+echo -n "."
 UNIQID=`basename "$WORKSPACE"`
+echo -n "."
 
 # Setup the host names.
 . "${INCPATH}/hostnames"
+echo -n "."
 
-# Setup cleanup for when we finish.
-function finish {
-    # Clear out the workspace
-    rm -rf "$WORKSPACE"
-
-    # The DB container does not shut down automatically.
-    docker container rm -f "${HOST_DB}"
-
-    # Remove the test nestwork.
-    docker network rm "${NETWORK}"
-}
-trap finish EXIT
+# Setup the traps.
+. "${INCPATH}/trap"
+echo -n "."
 
 # Setup the network for this test.
 docker network create "${NETWORK}" > /dev/null
+echo -n "."
 
-echo "# Job '${UNIQID}'"
+echo " done."
+
+echo "############################################################################"
+echo "# Task summary for '${UNIQID}':"
+echo "#"
 echo "# Requested target ${TASK} ${TASK_ARGS}"
 echo "# Requested database ${DB} (${DB_VERSION})"
 echo "############################################################################"
@@ -55,6 +60,7 @@ echo ""
 
 # Start PHP and run the target.
 . "${INCPATH}/php"
+EXITCODE=${EXITCODE:-1}
 
 echo "############################################################################"
 echo "# Run completed with exit code of ${EXITCODE}"

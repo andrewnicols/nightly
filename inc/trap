@@ -1,0 +1,19 @@
+# Setup cleanup for when we finish.
+function finish {
+    echo -n "Cleaning up run"
+
+    # Clear out the workspace
+    rm -rf "$WORKSPACE"
+    echo -n "."
+
+    # The DB container does not shut down automatically.
+    docker container rm -f "${HOST_DB}" > /dev/null
+    echo -n "."
+
+    # Remove the test nestwork.
+    docker network rm "${NETWORK}" > /dev/null
+    echo -n "."
+
+    echo " done."
+}
+trap finish EXIT
