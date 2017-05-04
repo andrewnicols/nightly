@@ -1,4 +1,4 @@
 #!/bin/bash
 
-ENTRYPOINT="/phpunit"
+ENTRYPOINT="/entry/phpunit.sh"
 ENTRYPOINTARGS=""

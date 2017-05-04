@@ -24,11 +24,13 @@ PHP_IMAGE="andrewnicols/moodle-php"
 echo "# Starting docker run"
 DOCKER_RUN_ARGS_VOLS_MOODLE="-v ${WORKSPACE}:/var/www/html/moodle:${VOLUME_ARGS}rw"
 DOCKER_RUN_ARGS_VOLS_COMPOSER="-v ${CACHEDIR}/composer:/.composer/cache:${VOLUME_ARGS}rw"
+DOCKER_RUN_ARGS_VOLS_ENTRIES="-v ${SCRIPTPATH}/entrypoints:/entry:${VOLUME_ARGS}rw -v ${SCRIPTPATH}/templates:/templates:${VOLUME_ARGS}rw"
 DOCKER_RUN_ARGS_ENTRYPOINT="--entrypoint ${ENTRYPOINT} ${ENTRYPOINTARGS}"
-DOCKER_RUN_ARGS_DB="--dbtype=${DB} --dbhost=${DB_HOST} --dbname=${DB_NAME} --phpunitdbprefix=${DB_PREFIX} --dbuser=${DB_USER} --dbpass=${DB_PASS}"
+DOCKER_RUN_ARGS_DB="--dbtype=${DB} --dbhost=${HOST_DB} --dbname=${DB_NAME} --phpunitdbprefix=${DB_PREFIX} --dbuser=${DB_USER} --dbpass=${DB_PASS}"
 DOCKER_RUN_ARGS_ENV_COMPOSER="-eCOMPOSER_CACHE_DIR=/.composer/cache"
+DOCKER_RUN_ARGS_DATADIR="--tmpfs /data:rw"
 
-DOCKER_RUN_ARGS="${DOCKER_RUN_ARGS_VOLS_MOODLE} ${DOCKER_RUN_ARGS_VOLS_COMPOSER} ${DOCKER_RUN_ARGS_ENTRYPOINT} ${PHP_IMAGE} ${DOCKER_RUN_ARGS_DB} $EXTRA_OPT"
+DOCKER_RUN_ARGS="${DOCKER_RUN_ARGS_VOLS_MOODLE} ${DOCKER_RUN_ARGS_VOLS_ENTRIES} ${DOCKER_RUN_ARGS_VOLS_COMPOSER} ${DOCKER_RUN_ARGS_DATADIR} ${DOCKER_RUN_ARGS_ENTRYPOINT} ${PHP_IMAGE} ${DOCKER_RUN_ARGS_DB} $EXTRA_OPT"
 docker run \
   -i \
   --rm \
