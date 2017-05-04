@@ -15,7 +15,6 @@ else
 fi
 
 echo "This is the composer cachedir ${COMPOSER_CACHE_DIR}"
-export
 
 ################## Functions #####################
 
