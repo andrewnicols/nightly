@@ -25,7 +25,7 @@ echo "# Found database configuration for ${DB}"
 
 runscript "databases" "${DB}" "pre-up"
 
-docker run \
+DB_RUN=`docker run \
   --network "${NETWORK}" \
   -d \
   -i \
@@ -33,7 +33,6 @@ docker run \
   --name="$HOST_DB" \
   ${DB_IMAGE_TMPFS} \
   ${DB_IMAGE_OPTS} \
-  ${DB_IMAGE} \
-  > /dev/null
+  ${DB_IMAGE}`
 
 runscript "databases" "${DB}" "post-up"
