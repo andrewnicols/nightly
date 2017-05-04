@@ -47,7 +47,6 @@ echo "#"
 echo "# Requested task ${TASK} ${TASK_ARGS}"
 echo "# Requested database ${DB} (${DB_VERSION})"
 echo "############################################################################"
-echo ""
 
 # Setup database.
 . "${INCPATH}/database"

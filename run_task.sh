@@ -18,7 +18,6 @@ echo "###"
 echo "### Starting nightly task (${THISVERSION})"
 echo "###"
 echo "############################################################################"
-echo
 
 # Perform setup.
 . "${INCPATH}/setup"
