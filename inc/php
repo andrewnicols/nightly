@@ -19,6 +19,8 @@ then
   echo "****************************************************************************"
 fi
 
+PHP_IMAGE="andrewnicols/moodle-php"
+
 echo "# Starting docker run"
 DOCKER_RUN_ARGS_VOLS_MOODLE="-v ${WORKSPACE}:/var/www/html/moodle:${VOLUME_ARGS}rw"
 DOCKER_RUN_ARGS_VOLS_COMPOSER="-v ${CACHEDIR}/composer:/.composer/cache:${VOLUME_ARGS}rw"
