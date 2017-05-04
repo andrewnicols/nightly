@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ "$DB" != 'mariadb' ]
+then
+  echo "****************************************************************************"
+  echo "** Attempted to load mariadb include with wrong DB field ${DB}"
+  echo "****************************************************************************"
+  exit 1
+fi
+
+DB_IMAGE="mysql/mysql-server:${DB_VERSION}"
+DB_IMAGE_OPTS="-e MYSQL_ROOT_PASSWORD=moodle -e MYSQL_DATABASE=${DB_NAME} -e MYSQL_USER=${DB_USER} -e MYSQL_PASSWORD=${DB_PASS} "
+DB_IMAGE_TMPFS="--tmpfs /var/lib/mysql:rw"
