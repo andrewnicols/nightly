@@ -1,0 +1,7 @@
+DB_IMAGE="rajeshtaneja/oracle-xe-11g"
+DB_NAME=xe
+DB_PREFIX=a
+DB_HOST="${HOST_DB}/xe"
+DB_USER="system"
+DB_PASS="oracle"
+DB_IMAGE_OPTS="-e ORACLE_ALLOW_REMOTE=true"

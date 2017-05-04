@@ -1,0 +1,8 @@
+DB_HOST=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "${HOST_DB}"`:1521/xe
+echo -n "Waiting"
+for t in `seq 1 5`
+do
+  sleep 1
+  echo -n "."
+done
+echo " done."
