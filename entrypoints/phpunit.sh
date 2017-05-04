@@ -113,7 +113,7 @@ function run_phpunit(){
     else
         LOG_JUNIT="--log-junit=${LOG_JUNIT}"
     fi
-    CMD="vendor/bin/phpunit $PHPUNIT_FILTER $PHPUNIT_TEST $STOP_ON_FAIL $LOG_JUNIT"
+    CMD="vendor/bin/phpunit --verbose $PHPUNIT_FILTER $PHPUNIT_TEST $STOP_ON_FAIL $LOG_JUNIT"
     log "$CMD"
     eval $CMD
     exitcode=${PIPESTATUS[0]}
